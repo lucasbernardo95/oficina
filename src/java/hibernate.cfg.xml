@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/oficina?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">020221</property>
+    <property name="hibernate.id.new_generate_maps">false</property>
+    <property name="hibernate.connection.pool_size">2</property>
+    <!--Validate vai validar os dados que estão no java antes de fazer qualquer operação no banco-->
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <!-- Configurações de debug -->
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <property name="generate_statistics">true</property>
+    <property name="use_sql_comments"/>
+    <mapping class="model.Usuario"/>
+    <mapping class="model.Cliente"/>
+    <mapping class="model.Produto"/>
+    <mapping class="model.Venda"/>
+  </session-factory>
+</hibernate-configuration>

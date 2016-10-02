@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>SGIAA</title>
+        <h:outputStylesheet library="css" name="css.css"/>
+    </h:head>
+    <p:growl autoUpdate="true"/>
+    <h:form id="flogin">
+        <p:fieldset legend="Entrar" class="tablelogin" >
+            <p:panelGrid columns="2"  >
+
+                <h:outputLabel value="Login"></h:outputLabel>
+                <p:inputText value="#{validador.login}"></p:inputText>
+
+                <h:outputLabel value="Senha"></h:outputLabel>
+                <p:password value="#{validador.senha}"/>
+
+                <p:outputLabel/>
+                <p:commandButton style="margin-left: 60px" icon="fa fa-check" value="Entrar" action="#{validador.autenticar()}" update="flogin"/> 
+
+            </p:panelGrid>
+        </p:fieldset>
+    </h:form>
+
+</html>
