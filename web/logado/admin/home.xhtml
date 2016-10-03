@@ -33,8 +33,8 @@
             <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" width="12%">
                 <h:outputText value="#{produto.nome}"></h:outputText>
             </p:column>
-            <p:column headerText="Estoque" sortBy="#{produto.quantidade}" filterBy="#{produto.quantidade}" width="4%">
-                <h:outputText value="#{produto.quantidade}"></h:outputText>
+            <p:column headerText="Estoque" sortBy="#{produto.estoque}" filterBy="#{produto.estoque}" width="4%">
+                <h:outputText value="#{produto.estoque}"></h:outputText>
             </p:column>
             <p:column headerText="Compra" sortBy="#{produto.valorcompra}" filterBy="#{produto.valorcompra}" width="4%">
                 <h:outputText value="#{produto.valorcompra}"></h:outputText>
@@ -60,7 +60,7 @@
                          paginator="true" rows="10" editable="true" paginatorPosition="top">
                 <p:column headerText="Opções" width="5%">
                     <!--actionListener=""-->
-                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update="listaCarrinho"
+                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update=":admin:listaCarrinho"
                                      actionListener="#{vendaBean.removeCarrinho}">
                         <f:attribute name="produtoEscolhido" value="#{produto}" />
                     </p:commandButton>
@@ -71,22 +71,93 @@
                 <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" width="12%">
                     <h:outputText value="#{produto.nome}"></h:outputText>
                 </p:column>
-                <p:column headerText="Quantidade" sortBy="#{produto.quantidade}" filterBy="#{produto.quantidade}" width="12%">
-                    <h:outputText value="#{produto.quantidade}"></h:outputText>
+                <p:column headerText="Quantidade" sortBy="#{produto.quantidadeVenda}" filterBy="#{produto.quantidadeVenda}" width="12%">
+                    <h:outputText value="#{produto.quantidadeVenda}"></h:outputText>
                 </p:column>
-                
+
             </p:dataTable>
 
             <p:commandButton value="Fechar" oncomplete="PF('carrinho').hide();"/>
-
+            <p:outputLabel value="Total :#{vendaBean.total}"/>
         </p:dialog>
 
         <!--Monstra a tela de vendas -->
         <p:dialog  id="telavendas" header="Vendas" widgetVar="vendas" showEffect="explode" 
-                   height="100%" width="33%" resizable="false">
-
-            <p:commandButton value="Fechar" oncomplete="PF('vendas').hide();"/>
+                   height="100%" width="50%%" resizable="false">
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Vendedor"/>
+                <h:outputText value="#{usuarioBean.usuario.nome}"/>
+                <p:outputLabel value="Cliente"/>
+                <h:outputText value="#{vendaBean.cliente.nome}"/>
+                <h:outputText value="Avista?" />
+                <p:selectBooleanCheckbox value="#{vendaBean.avista}" />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="5" >
+                <p:commandButton value="Buscar cliente" oncomplete="PF('buscaCliente').show();"/>
+                <p:commandButton value="Ver lista de compras" oncomplete="PF('carrinho').show();"/>
+                <p:commandButton value="Fechar" oncomplete="PF('vendas').hide();"/>
+                <p:commandButton value="Ver lista de clientes" oncomplete="PF('Clientes').show();"/>
+                <p:commandButton value="Finalizar" actionListener="#{vendaBean.venda()}"/>
+            </p:panelGrid>
+            <p:outputLabel value="Total :#{vendaBean.total}"/>
         </p:dialog>
+        <!--buscar cliente para venda-->
+        <p:dialog  id="buscaClientes" header="Vendas" widgetVar="buscaCliente" showEffect="explode" 
+                   height="100%" width="50%%" resizable="false">
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Código"/>
+                <p:inputText value="#{vendaBean.idcliente}"/>
+                <p:outputLabel value="Placa"/>
+                <p:inputText value="#{vendaBean.placa}"/>
+            </p:panelGrid>
+            <p:commandButton actionListener="#{vendaBean.buscarCliente()}" value="buscar" update=":admin:telavendas"/>
+            <p:commandButton value="Fechar" oncomplete="PF('buscaCliente').hide();"/>
+        </p:dialog>
+
+        <!--Monstra a tela de vendas -->
+        <p:dialog  id="tabelaCliente" header="Buscar cliente" widgetVar="Clientes" showEffect="explode" 
+                   height="100%" width="100%" resizable="false">
+            <p:dataTable value="#{vendaBean.clientes}" var="cliente" id="listaClientes" widgetVar="cellUsuario"
+                         paginator="true" rows="10" editable="true" paginatorPosition="top">
+                <p:column headerText="Opções" width="10%">
+                    <!--actionListener=""-->
+                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update="listaClientes">
+                        <f:attribute name="clienteEscolhido" value="#{cliente}" />
+                    </p:commandButton>
+                </p:column> 
+                <p:column headerText="Código" sortBy="#{cliente.id}" filterBy="#{cliente.id}" width="10%" >
+                    <h:outputText value="#{cliente.id}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{cliente.nome}" filterBy="#{cliente.nome}" width="12%">
+                    <h:outputText value="#{cliente.nome}"></h:outputText>
+                </p:column>
+                <p:column headerText="Telefone" sortBy="#{cliente.telefone}" filterBy="#{cliente.telefone}" width="12%">
+                    <h:outputText value="#{cliente.telefone}"></h:outputText>
+                </p:column>
+                <p:column headerText="E-mail" sortBy="#{cliente.email}" filterBy="#{cliente.email}" width="12%">
+                    <h:outputText value="#{cliente.email}"></h:outputText>
+                </p:column>
+                <p:column headerText="Endereço" sortBy="#{cliente.endereco}" filterBy="#{cliente.endereco}" width="12%">
+                    <h:outputText value="#{cliente.endereco}"></h:outputText>
+                </p:column>
+                <p:column headerText="Placa" sortBy="#{cliente.placa}" filterBy="#{cliente.placa}" width="10%">
+                    <h:outputText value="#{cliente.placa}"></h:outputText>
+                </p:column>
+                <p:column headerText="Cidade" sortBy="#{cliente.cidade}" filterBy="#{cliente.cidade}" width="10%">
+                    <h:outputText value="#{cliente.cidade}"></h:outputText>
+                </p:column>
+                <p:column headerText="Bairro" sortBy="#{cliente.bairro}" filterBy="#{cliente.bairro}" width="10%">
+                    <h:outputText value="#{cliente.bairro}"></h:outputText>
+                </p:column>
+                <p:column headerText="Débito" sortBy="#{cliente.debito}" filterBy="#{cliente.debito}" width="9%">
+                    <h:outputText value="#{cliente.debito}"></h:outputText>
+                </p:column>
+
+            </p:dataTable>
+            <p:commandButton value="Fechar" oncomplete="PF('Clientes').hide();"/>
+        </p:dialog>
+
 
     </h:form>
 

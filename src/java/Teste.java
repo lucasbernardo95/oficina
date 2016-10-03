@@ -27,12 +27,12 @@ import util.ErroSistema;
  */
 public class Teste {
     public static void main(String[] args) throws ErroSistema, ParseException {
-        //Usuario usuario = new Usuario(null, "Laryssa Rayhane", "laryssa", "123", TipoUsuario.administrador);
+        //Usuario usuario = new Usuario(null, "Eduardo Bernardo", "eduardo", "1088", TipoUsuario.administrador);
         
         //UsuarioDAO dao = new UsuarioDAO();
         //Usuario u2 = dao.buscar(2);
         
-        //dao.merge(usuario);
+        //dao.salvar(usuario);
         //Usuario u1 = dao.buscar(2);
         //System.out.println(u1.getNome());
         //Cliente cliente = new Cliente(null, "Lucas Bernardo", "José Salustiano", 
@@ -40,9 +40,13 @@ public class Teste {
         //ClienteDAO cdao = new ClienteDAO();
         //cdao.salvar(cliente);
 
-        //Produto p = new Produto("xp5", "Produto 0" , 100.00, 200.99 + 5, 100, u1);
-        //ProdutoDAO pdao = new ProdutoDAO();
-        //pdao.salvar(p);
+//        Produto p = new Produto("xp1", "Produto 1" , 100.00, 200.99 + 5, 100, u1, 0);
+//        Produto p2 = new Produto("xp2", "Produto 2" , 100.00, 200.99 + 5, 100, u1, 0);
+//        Produto p3 = new Produto("xp3", "Produto 3" , 100.00, 200.99 + 5, 100, u1, 0);
+//        ProdutoDAO pdao = new ProdutoDAO();
+//        pdao.salvar(p);
+//        pdao.salvar(p2);
+//        pdao.salvar(p3);
         
         //venda
 //        UsuarioDAO dao = new UsuarioDAO();
@@ -50,11 +54,9 @@ public class Teste {
 //
 //        ProdutoDAO pdao = new ProdutoDAO();
 //        Produto p = pdao.buscarProduto("xp3");
-//        Produto p2 = pdao.buscarProduto("xp4");
+//        Produto p2 = pdao.buscarProduto("xp2");
 //        
-//        ClienteDAO cdao = new ClienteDAO();
-//        Cliente c = cdao.buscar(1);
-//        
+
 //        List<Produto> lista = new ArrayList<>();
 //        lista.add(p);
 //        lista.add(p2);

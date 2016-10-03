@@ -53,22 +53,18 @@ public class Venda implements Serializable {
     private double valorcompra;
 
     @Column
-    private int quantidade;
-
-    @Column
     private boolean quitado;
 
     public Venda() {
     }
 
-    public Venda(Long idvenda, Usuario idusuario, Cliente cliente, List<Produto> produtos, double valorcompra, int quantidade, boolean quitado) {
+    public Venda(Long idvenda, Usuario idusuario, Cliente cliente, List<Produto> produtos, double valorcompra, boolean quitado) {
         this.idvenda = idvenda;
         this.idusuario = idusuario;
         this.cliente = cliente;
         this.produtos = produtos;
         this.datavenda = new java.sql.Date(System.currentTimeMillis());
         this.valorcompra = valorcompra;
-        this.quantidade = quantidade;
         this.quitado = quitado;
     }
 
@@ -122,14 +118,6 @@ public class Venda implements Serializable {
 
     public void setValorcompra(double valorcompra) {
         this.valorcompra = valorcompra;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 
     public boolean isQuitado() {

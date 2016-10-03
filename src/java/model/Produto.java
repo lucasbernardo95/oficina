@@ -40,8 +40,12 @@ public class Produto implements Serializable{
     @Column(name = "valorvenda")
     private double valorvenda;
     
-    @Column(name = "quantidade")
-    private int quantidade;
+    @Column(name = "estoque")
+    private int estoque;
+    
+    //Representa a quantidade que será vendida à um usuário
+    @Column(name = "quantidadeVenda")
+    private int quantidadeVenda;
     
     @JoinColumn(name = "idusuario")
     @ManyToOne( optional = true)
@@ -51,13 +55,14 @@ public class Produto implements Serializable{
     public Produto() {
     }
 
-    public Produto(String id, String nome, double valorcompra, double valorvenda, int quantidade, Usuario idusuario) {
+    public Produto(String id, String nome, double valorcompra, double valorvenda, int estoque, Usuario idusuario, int quantidadeVenda) {
         this.id = id;
         this.nome = nome;
         this.valorcompra = valorcompra;
         this.valorvenda = valorvenda;
-        this.quantidade = quantidade;
+        this.estoque = estoque;
         this.idusuario = idusuario;
+        this.quantidadeVenda = quantidadeVenda;
     }
 
     public Usuario getIdusuario() {
@@ -100,14 +105,38 @@ public class Produto implements Serializable{
         this.valorvenda = valorvenda;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getEstoque() {
+        return estoque;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 
+    public void decrementaEsoque(){
+        this.estoque --;
+    }
+    
+    public void incrementaEstoque(){
+        this.estoque ++;
+    }
+
+    public void incrementaQtd(){
+        this.quantidadeVenda ++;
+    }
+    
+    public void decrementaQtd(){
+        this.quantidadeVenda --;
+    }
+
+    public int getQuantidadeVenda() {
+        return quantidadeVenda;
+    }
+
+    public void setQuantidadeVenda(int quantidadeVenda) {
+        this.quantidadeVenda = quantidadeVenda;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

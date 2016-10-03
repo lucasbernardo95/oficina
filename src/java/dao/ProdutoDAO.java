@@ -6,9 +6,7 @@
 package dao;
 
 import model.Produto;
-import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import util.HibernateUtil;
