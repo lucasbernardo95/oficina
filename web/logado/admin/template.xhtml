@@ -21,28 +21,29 @@
                 <p:submenu label="Vendas" icon="ui-icon-gear">
                     <p:column>
                         <p:submenu label="Buscar item">
-                            <p:menuitem value="Abre uma caixa de dialogo para buscar o código do item, se encontrado irá insnerir os dados do cliente que vai comprar, reconhece quem vendeu e intere a quantidade do item"></p:menuitem>
+                            <p:menuitem value="Iniciar venda" oncomplete="PF('vendas').show();"></p:menuitem>
                         </p:submenu>
                     </p:column>
                 </p:submenu>
                 <p:submenu label="Cadastro" icon="ui-icon-person" >
                     <p:column>
                         <p:submenu label="Cadastrar">
-                            <p:menuitem value="Cliente"></p:menuitem>
-                            <p:menuitem value="Funcionário"></p:menuitem>
-                            <p:menuitem value="Administrador"></p:menuitem>
-                            <p:menuitem value="Produto"></p:menuitem>
+                            <p:menuitem value="Cliente" oncomplete="PF('').show();"></p:menuitem>
+                            <p:menuitem value="Funcionário" oncomplete="PF('').show();"></p:menuitem>
+                            <p:menuitem value="Administrador" oncomplete="PF('').show();"></p:menuitem>
+                            <p:menuitem value="Produto" oncomplete="PF('').show();"></p:menuitem>
                         </p:submenu>
                     </p:column>
                 </p:submenu>
                 <p:submenu label="Relatórios" icon="ui-icon-person" >
                     <p:column>
                         <p:submenu label="Acompanhamento">
-                            <p:menuitem value="Vendas"></p:menuitem>
-                            <p:menuitem value="Compras"></p:menuitem>
+                            <p:menuitem value="Vendas" oncomplete="PF('').show();"></p:menuitem>
+                            <p:menuitem value="Compras" oncomplete="PF('').show();"></p:menuitem>
                         </p:submenu>
                     </p:column>
                 </p:submenu>
+                <p:menuitem value="Carrinho"  oncomplete="PF('carrinho').show();" icon="fa fa-shopping-cart" />
                 <p:menuitem value="Sair" url="#" icon="ui-icon-close" />
                 <p:menuitem value="Bem-vindo #{usuarioBean.usuario.nome}"/>
             </p:megaMenu>
