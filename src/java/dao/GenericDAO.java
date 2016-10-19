@@ -150,7 +150,6 @@ public class GenericDAO<E> {//Recebe um tipo genérico que vai ser interpretado 
             if (transacao != null) {
                 transacao.rollback();
             }
-            JOptionPane.showMessageDialog(null, "Erro ao tentar salvar!");
             throw new ErroSistema("Erro ao tentar salvar!", erro);
             
         } finally {

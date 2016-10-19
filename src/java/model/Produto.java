@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,11 +23,14 @@ import javax.validation.constraints.Size;
 public class Produto implements Serializable{
     
     @Id
+    @GeneratedValue
     @Column(name = "idproduto")
-    private String id;
+    private Integer id;
+    
+    @Column(name = "código")
+    private String codigo;
     
     @Column(name = "nome", length = 30)
-    @NotNull(message = "Insira o nome do produto!")
     @Size(min = 5, max = 30, message = "O nome deve conter entre 3 e 30 dígitos")
     private String nome;
     
@@ -55,14 +55,13 @@ public class Produto implements Serializable{
     public Produto() {
     }
 
-    public Produto(String id, String nome, double valorcompra, double valorvenda, int estoque, Usuario idusuario, int quantidadeVenda) {
-        this.id = id;
+    public Produto(String codigo, String nome, double valorcompra, double valorvenda, int estoque, Usuario idusuario) {
+        this.codigo = codigo;
         this.nome = nome;
         this.valorcompra = valorcompra;
         this.valorvenda = valorvenda;
         this.estoque = estoque;
         this.idusuario = idusuario;
-        this.quantidadeVenda = quantidadeVenda;
     }
 
     public Usuario getIdusuario() {
@@ -73,11 +72,11 @@ public class Produto implements Serializable{
         this.idusuario = idusuario;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -136,11 +135,19 @@ public class Produto implements Serializable{
     public void setQuantidadeVenda(int quantidadeVenda) {
         this.quantidadeVenda = quantidadeVenda;
     }
-    
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 

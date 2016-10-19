@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+    <h:form id="fcliente">
+
+        <p:growl sticky="true" autoUpdate="true" />  
+
+        <p:dock>
+            <p:menuitem value="Cadastrar" icon="/resources/img/new.png" oncomplete="PF('cadcliente').show();" action="#{clienteBean.novo()}" update="fcliente"/>
+            <p:menuitem value="Buscar" icon="/resources/img/search.png" oncomplete="PF('buscaCliente').show();"/>
+            <p:menuitem value="Devedores" icon="/resources/img/devedor.png" oncomplete="PF('devedores').show();"/>
+            <p:menuitem value="Clientes" icon="/resources/img/clientes.png" oncomplete="PF('tabclientes').show();" actionListener ="#{clienteBean.buscar()}" />
+        </p:dock>
+
+        <!--dialogo para confirmação do botão exclcuir-->
+        <p:confirmDialog global="true">
+            <p:commandButton value="Sim" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Não" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+
+        <!--buscar cliente para venda-->
+        <p:dialog  id="cadcliente" header="Cadastro" widgetVar="cadcliente" showEffect="explode" 
+                   height="100%" width="50%%" resizable="false">
+                 
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Nome"/>
+                <p:inputText value="#{clienteBean.cliente.nome}"/>
+                <p:outputLabel value="E-mail"/>
+                <p:inputText value="#{clienteBean.cliente.email}"/>
+                <p:outputLabel value="Endereço"/>
+                <p:inputText value="#{clienteBean.cliente.endereco}"/>
+                <p:outputLabel value="Cidade"/>
+                <p:inputText value="#{clienteBean.cliente.cidade}"/>
+                <p:outputLabel value="Bairro"/>
+                <p:inputText value="#{clienteBean.cliente.bairro}"/>
+                <p:outputLabel value="Placa"/>
+                <p:inputText value="#{clienteBean.cliente.placa}"/>
+                <p:outputLabel value="Telefone"/>
+                <p:inputMask mask="(99)99999-9999" value="#{clienteBean.cliente.telefone}"/>
+                <p:commandButton value="Salvar" actionListener="#{clienteBean.salvar()}" />
+            </p:panelGrid>
+            
+        </p:dialog>
+        
+        <!--buscar cliente para venda-->
+        <p:dialog  id="buscaClientes" header="Buscas" widgetVar="buscaCliente" showEffect="explode" 
+                   height="100%" width="50%%" resizable="false">
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Código"/>
+                <p:inputText value="#{clienteBean.id}"/>
+                <p:outputLabel value="Placa"/>
+                <p:inputText value="#{clienteBean.placa}"/>
+            </p:panelGrid>
+            
+            <p:commandButton actionListener="#{clienteBean.buscar()}" value="buscar"/>
+        </p:dialog>
+
+        <!--Monstra a tabela dos clientes -->
+        <p:dialog  id="tabelaCliente" header="Buscar cliente" widgetVar="tabclientes" showEffect="explode" 
+                   height="100%" width="100%" resizable="false">
+            <p:dataTable value="#{clienteBean.clientes}" var="cliente" id="listaClientes" widgetVar="cellUsuario"
+                         paginator="true" rows="10" editable="true" paginatorPosition="top" resizableColumns="true">
+
+                <p:ajax event="rowEdit" listener="#{clienteBean.atualizarCliente}" update="listaClientes"/>
+                <p:ajax event="rowEditCancel" listener="#{clienteBean.cancelaAlteracao}" update="listaClientes"/>
+
+                <f:facet name="header">
+                    Clientes
+                </f:facet>
+                <p:column headerText="Opções" width="10%">
+                    <p:rowEditor style="float: left; width:32px" id="botaoEditor"/>
+                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update="listaClientes"
+                                     actionListener="#{clienteBean.apagar()}">
+                        <f:attribute name="clienteEscolhido" value="#{cliente}" />
+                    </p:commandButton>
+                </p:column> 
+                <p:column headerText="Código" sortBy="#{cliente.id}" filterBy="#{cliente.id}" width="6%" >
+                    <h:outputText value="#{cliente.id}"/>
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{cliente.nome}" filterBy="#{cliente.nome}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.nome}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.nome}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Telefone" sortBy="#{cliente.telefone}" filterBy="#{cliente.telefone}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.telefone}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.telefone}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="E-mail" sortBy="#{cliente.email}" filterBy="#{cliente.email}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.email}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.email}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Endereço" sortBy="#{cliente.endereco}" filterBy="#{cliente.endereco}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.endereco}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.endereco}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Placa" sortBy="#{cliente.placa}" filterBy="#{cliente.placa}" width="10%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.placa}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.placa}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Cidade" sortBy="#{cliente.cidade}" filterBy="#{cliente.cidade}" width="10%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.cidade}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.cidade}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Bairro" sortBy="#{cliente.bairro}" filterBy="#{cliente.bairro}" width="10%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.bairro}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.bairro}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Débito" sortBy="#{cliente.debito}" filterBy="#{cliente.debito}" width="9%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cliente.debito}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{cliente.debito}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+            </p:dataTable>
+        </p:dialog>
+
+
+    </h:form>
+
+</ui:decorate>

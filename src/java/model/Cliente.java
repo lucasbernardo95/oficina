@@ -32,43 +32,34 @@ public class Cliente implements Serializable{
     private Integer id;
 
     @Column(name = "nome", length = 30)
-    @NotNull(message = "Insira o nome do cliente!")
-    @Size(min = 5, max = 30, message = "O nome deve conter entre 3 e 30 dígitos")
     private String nome;
     
     @Column(name = "endereco", length = 30)
-    @NotNull(message = "Insira o endereço do cliente!")
     private String endereco;
     
-    @Column(name = "placa", length = 7)
-    @NotNull(message = "Insira a placa da moto do cliente!")
-    @Size(min = 7, max = 7)
+    @Column(name = "placa", length = 8)
     private String placa;
     
     @Column(name = "cidade", length = 15)
-    @NotNull(message = "Insira a cidade")
     private String cidade;
     
     @Column(name = "bairro", length = 25)
-    @NotNull(message = "Insira a cidade")
     private String bairro;
 
     @Column(name = "email", length = 30)
     @Pattern(regexp = "[a-zA-Z0-9]+@+[a-zA-Z0-9]+[.]+com", message = "Informe um e-mail no formato xxx@xxx.com, ou xxx@xxx.com")
     private String email;
 
-    @Column(name = "telefone")
-    @NotNull(message = "A senha não pode ser nula!")
-    @Size(min = 9, max = 11)
+    @Column(name = "telefone", length = 15)
     private String telefone;
 
-    @Column(name = "debito", length = 6)
-    private int debito;
+    @Column(name = "debito")
+    private double debito;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, String nome, String endereco, String placa, String cidade, String bairro, String email, String telefone, int debito) {
+    public Cliente(Integer id, String nome, String endereco, String placa, String cidade, String bairro, String email, String telefone, double debito) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -144,11 +135,11 @@ public class Cliente implements Serializable{
         this.telefone = telefone;
     }
 
-    public int getDebito() {
+    public double getDebito() {
         return debito;
     }
 
-    public void setDebito(int debito) {
+    public void setDebito(double debito) {
         this.debito = debito;
     }
 

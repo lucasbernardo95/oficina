@@ -27,22 +27,15 @@ public class Usuario implements Serializable {
     private Integer id;
 
     @Column(name = "nome", length = 30, nullable = true)
-    @NotNull(message = "Insira seu nome!")
-    @Size(min = 5, max = 30, message = "O nome deve conter entre 5 e 30 dígitos")
     private String nome;
 
     @Column(name = "login", length = 20, nullable = false, unique = true)
-    @NotNull(message = "Informe um login!")
-    @Size(min = 3, max = 20, message = "O nome deve conter entre 3 e 20 dígitos")
     private String login;
     
     @Column(name = "senha", length = 15, nullable = false)
-    @NotNull(message = "A senha não pode ser nula!")
-    @Size(min = 3, max = 15, message = "A senha deve conter entre 3 e 15 dígitos")
     private String senha;
 
     @Column(name = "tipo", length = 13, nullable = false)
-    @NotNull(message = "Informe um tipo de usuário")
     private TipoUsuario tipo;
 
     
@@ -59,8 +52,7 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nome, String login, String senha, TipoUsuario tipo) {
-        this.id = id;
+    public Usuario(String nome, String login, String senha, TipoUsuario tipo) {
         this.nome = nome;
         this.login = login;
         this.senha = senha;

@@ -55,7 +55,7 @@ public class ValidadorAcesso implements Serializable {
                 if (TipoUsuario.funcionário == u.getTipo()) {
                     return "/logado/funcionario/home.xhtml?faces-redirect=true";
                 } else if (TipoUsuario.administrador == u.getTipo()) {
-                    return "/logado/admin/home.xhtml?faces-redirect=true";
+                    return "/logado/admin/template.xhtml?faces-redirect=true";
                 }
 
             }

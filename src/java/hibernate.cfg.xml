@@ -8,7 +8,7 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">020221</property>
     <property name="hibernate.id.new_generate_maps">false</property>
-    <property name="hibernate.connection.pool_size">2</property>
+    <property name="hibernate.connection.pool_size">1</property>
     <!--Validate vai validar os dados que estão no java antes de fazer qualquer operação no banco-->
     <property name="hibernate.hbm2ddl.auto">update</property>
     <!-- Configurações de debug -->

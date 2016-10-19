@@ -27,12 +27,17 @@ import util.ErroSistema;
  */
 public class Teste {
     public static void main(String[] args) throws ErroSistema, ParseException {
-        //Usuario usuario = new Usuario(null, "Eduardo Bernardo", "eduardo", "1088", TipoUsuario.administrador);
-        
-        //UsuarioDAO dao = new UsuarioDAO();
-        //Usuario u2 = dao.buscar(2);
-        
-        //dao.salvar(usuario);
+//        Usuario usuario = new Usuario( "Eduardo Bernardo", "eduardo", "123", TipoUsuario.administrador);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+////        //Usuario u2 = dao.buscar(2);
+////        
+//        dao.salvar(usuario);
+            Cliente c = new Cliente(null, "Jonatas Melo", "Não sei", 
+                    "void123", "Macaíba", "Ferreiro Torto", "melo@gmail.com", "(84)99452-7602", 0);
+            ClienteDAO cdao = new ClienteDAO();
+            cdao.salvar(c);
+
         //Usuario u1 = dao.buscar(2);
         //System.out.println(u1.getNome());
         //Cliente cliente = new Cliente(null, "Lucas Bernardo", "José Salustiano", 

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+    <h:form id="fusuario">
+
+        <p:growl autoUpdate="true"/>
+
+        <!--dialogo para confirmação do botão exclcuir-->
+        <p:confirmDialog global="true">
+            <p:commandButton value="Sim" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Não" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+        <p:dock>
+            <p:menuitem value="Cadastrar" icon="/resources/img/new.png" oncomplete="PF('cadusuario').show();" action="#{usuarioBean.novo()}" update="fusuario"/>
+            <p:menuitem value="Alterar meus dados" icon="/resources/img/devedor.png" oncomplete="PF('cadusuario').show();" action="#{usuarioBean.alteraDados()}" update="cadusuario"/>
+            <p:menuitem value="Usuarios" icon="/resources/img/clientes.png" oncomplete="PF('tabusuarios').show();" actionListener ="#{usuarioBean.buscar()}" />
+        </p:dock>
+
+        <p:dialog  id="cadusuario" header="Cadastrar" widgetVar="cadusuario" showEffect="explode" 
+                   height="100%" width="50%%" resizable="false">
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Nome"/>
+                <p:inputText value="#{usuarioBean.usuario.nome}"/>
+                <p:outputLabel value="login"/>
+                <p:inputText value="#{usuarioBean.usuario.login}"/>
+                <p:outputLabel value="Senha"/>
+                <p:password value="#{usuarioBean.usuario.senha}"/>
+
+                <p:outputLabel for="tipo" value="Tipo" />
+                <p:selectOneListbox id="tipo" value="#{usuarioBean.usuario.tipo}">
+                    <f:selectItem itemLabel="Administrador" itemValue="administrador" />
+                    <f:selectItem itemLabel="Funcionários" itemValue="funcionário" />
+                </p:selectOneListbox>
+
+
+                <p:outputPanel/>
+                <p:commandButton value="Salvar" actionListener="#{usuarioBean.salvar()}" update="fusuario"/>
+            </p:panelGrid>
+        </p:dialog>
+        <!--Monstra a tabela dos clientes -->
+        <p:dialog  id="diagUsuario" header="Lista de usuários" widgetVar="tabusuarios" showEffect="explode" 
+                   height="100%" width="100%" resizable="false">
+            <p:dataTable value="#{usuarioBean.lista}" var="usuario" id="tabelausuario" widgetVar="cellUsuario"
+                         paginator="true" rows="10" editable="true" paginatorPosition="top" resizableColumns="true">
+
+                <p:ajax event="rowEdit" listener="#{usuarioBean.atualizar}" update="tabelausuario"/>
+                <p:ajax event="rowEditCancel" listener="#{usuarioBean.cancelar}" update="tabelausuario"/>
+
+                <f:facet name="header">
+                    <p:commandButton value="Novo" oncomplete="PF('cadusuario').show();"/>
+                </f:facet>
+                <p:column headerText="Opções" width="10%">
+                    <p:rowEditor style="float: left; width:32px" />
+                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update="tabelausuario"
+                                     actionListener="#{usuarioBean.excluir()}">
+                        <f:attribute name="usuarioEscolhido" value="#{usuario}" />
+                    </p:commandButton>
+                </p:column> 
+                <p:column headerText="Código" sortBy="#{usuario.id}" filterBy="#{usuario.id}" width="6%" >
+                    <h:outputText value="#{usuario.id}"/>
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{usuario.nome}" filterBy="#{usuario.nome}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{usuario.nome}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{usuario.nome}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Login" sortBy="#{usuario.login}" filterBy="#{usuario.login}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{usuario.login}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{usuario.login}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Tipo" sortBy="#{usuario.tipo}" filterBy="#{usuario.tipo}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{usuario.tipo}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{usuario.tipo}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+            </p:dataTable>
+        </p:dialog>
+
+    </h:form>
+
+</ui:decorate>

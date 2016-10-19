@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+    <h:form id="fproduto"> 
+        <p:growl autoUpdate="true"/>
+
+        <p:dock>
+            <p:menuitem value="Cadastrar" icon="/resources/img/new.png" oncomplete="PF('cadproduto').show();" actionListener="#{produtoBean.novo}" update="fproduto"/>
+            <p:menuitem value="Estoque baixo" icon="/resources/img/estoque.png"/>
+            <p:menuitem value="Estoque" icon="/resources/img/pecas.png" oncomplete="PF('tabproduto').show();" actionListener="#{produtoBean.buscar()}"/>
+        </p:dock>
+
+        <!--Tabela de produtos-->
+        <p:dialog  id="tabprodutos" header="Estoque" widgetVar="tabproduto" showEffect="explode" 
+                   height="100%" width="100%" resizable="false">
+            <p:dataTable value="#{produtoBean.lista}" var="produto" id="listaProdutos" widgetVar="cellUsuario"
+                         paginator="true" rows="10"  editable="true" paginatorPosition="top" resizableColumns="true">
+
+                <p:ajax event="rowEdit" listener="#{produtoBean.atualizarProduto}" update="listaProdutos :fprincipal"/>
+                <p:ajax event="rowEditCancel" listener="#{produtoBean.cancelaAlteracao}" update="listaProdutos"/>
+
+                <p:column headerText="Opções" width="5%">
+                    <!--actionListener=""-->
+                    <p:rowEditor style="float: left;" id="botaoEditor"/>
+                    <p:commandButton icon="fa fa-trash-o" title="Excluir" update="listaProdutos"
+                                     actionListener="#{produtoBean.apagar}">
+                        <p:confirm header="Confirmação" message="Deseja excluir o produto??" icon="ui-icon-alert" />
+                        <f:attribute name="produtoEscolhido" value="#{produto}" />
+                    </p:commandButton>
+                    <p:commandButton icon="fa fa-cart-plus" title="Adicionar" update="listaProdutos :fprincipal"
+                                     actionListener="#{carrinhoBean.adicionaCarrinho}">
+                        <f:attribute name="produtoEscolhido" value="#{produto}" />
+                    </p:commandButton>
+                </p:column> 
+                <p:column headerText="Código" sortBy="#{produto.id}" filterBy="#{produto.id}" width="7%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{produto.codigo}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{produto.codigo}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" width="12%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{produto.nome}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{produto.nome}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Estoque" sortBy="#{produto.estoque}" filterBy="#{produto.estoque}" width="4%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{produto.estoque}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{produto.estoque}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Compra" sortBy="#{produto.valorcompra}" filterBy="#{produto.valorcompra}" width="4%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{produto.valorcompra}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{produto.valorcompra}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Venda" sortBy="#{produto.valorvenda}" filterBy="#{produto.valorvenda}" width="4%">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{produto.valorvenda}"/> </f:facet>
+                        <f:facet name="input"><h:inputText value="#{produto.valorvenda}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+            </p:dataTable>
+        </p:dialog>
+
+
+        <!--Cadastro de produtos-->
+        <p:dialog  id="cadprodutos" header="Cadastrar produtos" widgetVar="cadproduto" showEffect="explode" 
+                   height="100%" width="50%%" resizable="false">
+            <p:panelGrid columns="2"  >
+
+                <h:outputLabel value="Código"></h:outputLabel>
+                <p:inputText value="#{produtoBean.produto.codigo}"/>
+
+                <h:outputLabel value="Nome"/>
+                <p:inputText value="#{produtoBean.produto.nome}"/>
+
+                <h:outputLabel value="Estoque"/>
+                <p:inputText value="#{produtoBean.produto.estoque}"/>
+
+                <h:outputLabel value="Valor da compra"/>
+                <p:inputText value="#{produtoBean.produto.valorcompra}"/>
+
+                <h:outputLabel value="Valor da revenda"/>
+                <p:inputText value="#{produtoBean.produto.valorvenda}"/>
+
+                <p:outputLabel/>
+                <p:commandButton style="margin-left: 60px" icon="fa fa-check" 
+                                 value="Cadastrar" action="#{produtoBean.salvar()}" 
+
+                                 update="fproduto ">
+
+                </p:commandButton> 
+            </p:panelGrid>
+        </p:dialog>
+
+        <!--dialogo para confirmação do botão exclcuir-->
+        <p:confirmDialog global="true">
+            <p:commandButton value="Sim" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Não" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+    </h:form>
+
+</ui:decorate>
